@@ -51,10 +51,7 @@ export default function Home({ words }: HomeProps) {
           <h1 className="text-3xl md:text-4xl font-bold text-center text-purple-700 mb-6">
             The Thai Dictionary 🇹🇭
           </h1>
-        </div>
           
-        {/* Sticky search bar that follows user on scroll */}
-        <div className="sticky top-16 w-full max-w-xl mx-auto mb-8 z-10 p-4 rounded-xl bg-white/80 backdrop-blur-sm shadow-sm">
           <SearchBar 
             searchQuery={searchQuery} 
             setSearchQuery={setSearchQuery}
