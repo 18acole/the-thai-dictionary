@@ -36,7 +36,7 @@ export default function SearchBar({ searchQuery, setSearchQuery, language }: Sea
         </button>
       </div>
       <p className="text-center text-pink-700">
-        Instantly find Thai translations 🇹🇭✨
+        Learn Thai instantly — from a native, not a robot 🤖❌
       </p>
     </form>
   );
