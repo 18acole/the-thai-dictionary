@@ -8,33 +8,30 @@ interface DictionaryTableProps {
 
 export default function DictionaryTable({ words, language }: DictionaryTableProps) {
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-purple-100">
-          <thead className="bg-purple-50">
-            <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-purple-700 uppercase tracking-wider">
+    <div className="w-full max-w-2xl mx-auto overflow-x-auto">
+      <div className="bg-white rounded-xl shadow-lg p-4 border border-pink-200">
+        <table className="w-full">
+          <thead>
+            <tr className="border-b-2 border-pink-100">
+              <th className="py-3 text-left text-pink-700 font-bold">
                 {language === 'english' ? '🇺🇸 English' : '🇨🇳 Chinese'}
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-purple-700 uppercase tracking-wider">
+              <th className="py-3 text-left text-pink-700 font-bold">
                 🇹🇭 Thai
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-purple-700 uppercase tracking-wider">
+              <th className="py-3 text-center text-pink-700 font-bold">
                 🔊 Audio
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-purple-700 uppercase tracking-wider">
-                ❤️ Favourite
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-purple-100">
+          <tbody>
             {words.length > 0 ? (
               words.map((word) => (
                 <TableRow key={word._id} word={word} language={language} />
               ))
             ) : (
               <tr>
-                <td colSpan={4} className="px-6 py-4 text-center text-gray-500">
+                <td colSpan={3} className="px-6 py-4 text-center text-gray-500">
                   No words found. Try adjusting your search.
                 </td>
               </tr>

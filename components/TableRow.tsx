@@ -8,7 +8,6 @@ interface TableRowProps {
 
 export default function TableRow({ word, language }: TableRowProps) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
 
   const playAudio = () => {
     if (isPlaying) return;
@@ -31,42 +30,24 @@ export default function TableRow({ word, language }: TableRowProps) {
     });
   };
 
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    // This is just UI state since we don't have a login system
-  };
-
   return (
-    <tr className="hover:bg-pink-50 transition-colors">
-      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+    <tr className="border-b border-pink-50 hover:bg-pink-50">
+      <td className="py-4 text-purple-800">
         {language === 'english' ? word.english : word.chinese}
       </td>
       
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className="text-sm text-gray-900">{word.thai}</div>
+      <td className="py-4">
+        <div className="text-purple-800">{word.thai}</div>
         <div className="text-xs text-gray-500">{word.romanized}</div>
       </td>
       
-      <td className="px-6 py-4 whitespace-nowrap">
+      <td className="py-4 text-center">
         <button
           onClick={playAudio}
           disabled={isPlaying}
-          className={`p-2 rounded-full ${
-            isPlaying 
-              ? 'bg-purple-200 text-purple-600' 
-              : 'bg-purple-100 text-purple-500 hover:bg-purple-200'
-          }`}
+          className="text-gray-500 hover:text-purple-600"
         >
-          {isPlaying ? '🔊' : '🔈'}
-        </button>
-      </td>
-      
-      <td className="px-6 py-4 whitespace-nowrap">
-        <button
-          onClick={toggleFavorite}
-          className="p-2 rounded-full bg-pink-50 hover:bg-pink-100 text-pink-500"
-        >
-          {isFavorite ? '❤️' : '🤍'}
+          {isPlaying ? '🔊' : '🔊'}
         </button>
       </td>
     </tr>

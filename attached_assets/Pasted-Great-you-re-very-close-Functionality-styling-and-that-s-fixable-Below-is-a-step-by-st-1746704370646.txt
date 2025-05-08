@@ -1,0 +1,174 @@
+Great — you're very close. Functionality ✅, styling ❌ — and that's fixable.
+
+Below is a step-by-step **Tailwind style cleanup plan** to make your current working Replit version visually match your desired design from the Vercel-generated reference you just reposted.
+
+---
+
+## 🎨 Style Cleanup Plan — Match Vercel V0 Look
+
+---
+
+### 🪟 1. Page Background
+
+**Expected**: Soft gradient from peach to pink
+**Code (apply to outer `<div>`):**
+
+```tsx
+<div className="min-h-screen bg-gradient-to-br from-orange-50 to-pink-50 flex flex-col">
+```
+
+---
+
+### 🔠 2. Title
+
+**Expected**:
+
+* Large, bold purple title
+* Slight gap between title and search
+
+**Fix:**
+
+```tsx
+<h1 className="text-3xl md:text-4xl font-bold text-center text-purple-700 mb-6">
+  The Thai Dictionary 🇹🇭
+</h1>
+```
+
+---
+
+### 🔍 3. Search Bar
+
+**Expected**:
+
+* Pill shape
+* Shadow
+* Emoji in placeholder
+* Gradient search button
+
+**Fix (wrap input + button in a `relative` div):**
+
+```tsx
+<div className="relative w-full max-w-xl mx-auto mb-8">
+  <input
+    type="text"
+    placeholder="🔎 Search Thai words..."
+    className="w-full h-14 pl-4 pr-12 text-lg rounded-full border-2 border-pink-300 focus:border-purple-500 shadow-md"
+  />
+  <button
+    type="submit"
+    className="absolute right-1 top-1 h-12 px-6 rounded-full text-white font-semibold bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700"
+  >
+    Search
+  </button>
+</div>
+```
+
+---
+
+### 📖 4. Dictionary Table
+
+**Expected**:
+
+* White card
+* Rounded corners
+* Soft border and shadow
+* Column headers pink
+* Text purple
+
+**Fix:**
+
+Wrap your table in this:
+
+```tsx
+<div className="w-full max-w-2xl mx-auto overflow-x-auto">
+  <div className="bg-white rounded-xl shadow-lg p-4 border border-pink-200">
+    <table className="w-full">
+      <thead>
+        <tr className="border-b-2 border-pink-100">
+          <th className="py-3 text-left text-pink-700 font-bold">🇺🇸 English</th>
+          <th className="py-3 text-left text-pink-700 font-bold">🇹🇭 Thai</th>
+          <th className="py-3 text-center text-pink-700 font-bold">🔊 Audio</th>
+        </tr>
+      </thead>
+      <tbody>
+        {/* Render rows here */}
+      </tbody>
+    </table>
+  </div>
+</div>
+```
+
+In each `<td>`, use:
+
+```tsx
+<td className="py-4 text-purple-800">Hello</td>
+```
+
+And wrap rows in:
+
+```tsx
+<tr className="border-b border-pink-50 hover:bg-pink-50">
+```
+
+---
+
+### 🔊 5. Audio Button
+
+**Expected**:
+
+* Icon-only button
+* Greyed out if unavailable
+* No borders
+
+**Fix:**
+
+```tsx
+<button
+  onClick={() => new Audio(audioUrl).play()}
+  className="text-gray-500 hover:text-purple-600"
+>
+  🔊
+</button>
+```
+
+---
+
+### 🧼 6. Remove Unused Features
+
+* ❌ **No Premium**
+* ❌ **No Favourite column**
+* ❌ **No User Account icon**
+
+Delete these from your layout and code.
+
+---
+
+### 🦶 7. Footer
+
+**Fix:**
+
+```tsx
+<footer className="mt-12 py-6 text-center text-sm text-pink-700">
+  <div className="text-2xl mb-2">🇹🇭 🌴 🍍 🌺</div>
+  <p>© 2025 The Thai Dictionary</p>
+  <div className="flex justify-center gap-4 mt-2 text-purple-600">
+    <a href="#">📸 Instagram</a>
+    <a href="#">🐦 Twitter</a>
+  </div>
+</footer>
+```
+
+---
+
+## ✅ Summary of Priorities
+
+| Priority    | Task                                                                        |
+| ----------- | --------------------------------------------------------------------------- |
+| 🎨 High     | Apply Tailwind styling: gradients, rounded elements, shadows, color palette |
+| ❌ High      | Remove premium, favourites, and user accounts                               |
+| 🔊 Medium   | Make audio buttons clean + functional                                       |
+| 🧪 Optional | Add hover states, spacing, typography polish                                |
+
+---
+
+Would you like me to generate a complete example of the updated dictionary row component styled like Vercel V0?

@@ -43,11 +43,11 @@ export default function Home({ words }: HomeProps) {
   }, [searchQuery, language, words]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-pink-50 flex flex-col">
       <Header language={language} setLanguage={setLanguage} />
       
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-4xl md:text-5xl font-bold text-center text-purple-600 mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-center text-purple-700 mb-6">
           The Thai Dictionary 🇹🇭
         </h1>
         
@@ -68,20 +68,18 @@ export default function Home({ words }: HomeProps) {
         />
       </main>
 
-      <footer className="max-w-4xl mx-auto px-4 py-8 text-center">
-        <div className="text-2xl mb-3">
+      <footer className="mt-12 py-6 text-center text-sm text-pink-700">
+        <div className="text-2xl mb-2">
           🇹🇭 🌴 🍍 🌺
         </div>
-        <div className="text-pink-500">
-          <a href="https://instagram.com" className="mx-3 hover:text-pink-700">
+        <p>© 2025 The Thai Dictionary</p>
+        <div className="flex justify-center gap-4 mt-2 text-purple-600">
+          <a href="#" className="hover:text-purple-800">
             📸 Instagram
           </a>
-          <a href="https://twitter.com" className="mx-3 hover:text-pink-700">
+          <a href="#" className="hover:text-purple-800">
             🐦 Twitter
           </a>
-        </div>
-        <div className="mt-4 text-gray-500 text-sm">
-          © 2025 The Thai Dictionary
         </div>
       </footer>
 
@@ -94,16 +92,7 @@ export default function Home({ words }: HomeProps) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   // Fetch all dictionary entries from Sanity
-  const words = await sanityClient.fetch(`
-    *[_type == "word"]{
-      _id,
-      english,
-      chinese,
-      thai,
-      romanized,
-      "audioUrl": audio.asset->url
-    }
-  `);
+  const words = await sanityClient.fetch();
 
   return {
     props: {
