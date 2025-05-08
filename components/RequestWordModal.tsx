@@ -6,7 +6,6 @@ interface RequestWordModalProps {
 
 export default function RequestWordModal({ onClose }: RequestWordModalProps) {
   const [word, setWord] = useState('');
-  const [language, setLanguage] = useState<'english' | 'chinese'>('english');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
@@ -27,7 +26,7 @@ export default function RequestWordModal({ onClose }: RequestWordModalProps) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ word, language }),
+        body: JSON.stringify({ word }),
       });
       
       const data = await response.json();
@@ -59,7 +58,7 @@ export default function RequestWordModal({ onClose }: RequestWordModalProps) {
         </div>
         
         <form onSubmit={handleSubmit} className="p-6">
-          <div className="mb-4">
+          <div className="mb-6">
             <label className="block text-purple-800 text-sm font-bold mb-2" htmlFor="word">
               Word to request:
             </label>
@@ -71,32 +70,6 @@ export default function RequestWordModal({ onClose }: RequestWordModalProps) {
               className="appearance-none border-2 border-pink-200 rounded-lg w-full py-2 px-3 text-purple-800 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               placeholder="Enter word you'd like to be added"
             />
-          </div>
-          
-          <div className="mb-6">
-            <label className="block text-purple-800 text-sm font-bold mb-2">
-              Language:
-            </label>
-            <div className="flex space-x-4">
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  checked={language === 'english'}
-                  onChange={() => setLanguage('english')}
-                  className="form-radio text-pink-600"
-                />
-                <span className="ml-2 text-purple-800">🇺🇸 English</span>
-              </label>
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  checked={language === 'chinese'}
-                  onChange={() => setLanguage('chinese')}
-                  className="form-radio text-pink-600"
-                />
-                <span className="ml-2 text-purple-800">🇨🇳 Chinese</span>
-              </label>
-            </div>
           </div>
           
           {message && (

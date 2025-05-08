@@ -22,17 +22,17 @@ export default async function handler(
   }
 
   try {
-    const { word, language } = req.body;
+    const { word } = req.body;
 
-    if (!word || !language) {
+    if (!word) {
       return res.status(400).json({ 
         success: false, 
-        message: 'Word and language are required' 
+        message: 'Word is required' 
       });
     }
 
     // Log the request
-    console.log('Word request received:', { word, language });
+    console.log('Word request received:', { word });
 
     try {
       // Try to store in Sanity if we have a token
@@ -41,7 +41,6 @@ export default async function handler(
         await writeClient.create({
           _type: 'wordRequest',
           word,
-          language,
           requestedAt: new Date().toISOString(),
           status: 'pending'
         });
