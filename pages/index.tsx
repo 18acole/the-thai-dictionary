@@ -57,17 +57,22 @@ export default function Home({ words }: HomeProps) {
             setSearchQuery={setSearchQuery}
             language={language}
           />
-          
-          <p className="text-center mt-3 mb-8 text-purple-500 cursor-pointer hover:text-purple-700"
-             onClick={() => setIsModalOpen(true)}>
-            Can't find a word? Request it here 📩
-          </p>
         </div>
         
         <DictionaryTable 
           words={filteredWords} 
           language={language}
         />
+
+        {/* Request Word Button */}
+        <div className="w-full max-w-2xl mx-auto mt-10 text-center">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white shadow-sm border border-pink-200 text-pink-600 hover:text-pink-800 hover:bg-pink-50 transition-colors"
+          >
+            Can't find a word? Request it here 📩
+          </button>
+        </div>
       </main>
 
       <footer className="mt-10 py-6 px-4 border-t border-pink-100 bg-white/80">
