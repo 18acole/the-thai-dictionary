@@ -95,12 +95,21 @@ export default function Home({ words }: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  // Fetch all dictionary entries from Sanity
-  const words = await sanityClient.fetch();
+  try {
+    // Fetch all dictionary entries from Sanity
+    const words = await sanityClient.fetch();
 
-  return {
-    props: {
-      words,
-    },
-  };
+    return {
+      props: {
+        words,
+      },
+    };
+  } catch (error) {
+    console.error('Error in getServerSideProps:', error);
+    return {
+      props: {
+        words: [], // Return empty array in case of error
+      }
+    };
+  }
 };

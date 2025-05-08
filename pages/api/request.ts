@@ -1,16 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { createClient } from '@sanity/client';
+import { sanityConfig } from '../../lib/sanity';
 
 type Data = {
   success: boolean;
   message: string;
 }
 
-// In-memory storage for word requests (since we're not using Sanity for now)
-const wordRequests: Array<{
-  word: string;
-  language: string;
-  requestedAt: string;
-}> = [];
+// Create a write client with token
+const writeClient = createClient({
+  ...sanityConfig,
+  token: process.env.SANITY_TOKEN,
+});
 
 export default async function handler(
   req: NextApiRequest,
@@ -30,18 +31,34 @@ export default async function handler(
       });
     }
 
-    // Store the request in memory (would be Sanity in production)
-    wordRequests.push({
-      word,
-      language,
-      requestedAt: new Date().toISOString(),
-    });
-
+    // Log the request
     console.log('Word request received:', { word, language });
+
+    try {
+      // Try to store in Sanity if we have a token
+      if (process.env.SANITY_TOKEN) {
+        // Create a document in Sanity
+        await writeClient.create({
+          _type: 'wordRequest',
+          word,
+          language,
+          requestedAt: new Date().toISOString(),
+          status: 'pending'
+        });
+        
+        console.log('Word request saved to Sanity');
+      } else {
+        console.warn('No Sanity token available, request logged but not saved to Sanity');
+      }
+    } catch (sanityError) {
+      console.error('Error saving to Sanity:', sanityError);
+      // We don't want to fail the request if Sanity save fails
+      // Just log the error and continue
+    }
 
     return res.status(200).json({ 
       success: true, 
-      message: 'Word request submitted successfully!' 
+      message: 'Word request submitted successfully! Our team will review it.' 
     });
   } catch (error) {
     console.error('Error submitting word request:', error);
