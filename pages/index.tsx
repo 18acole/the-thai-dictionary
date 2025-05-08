@@ -70,12 +70,10 @@ export default function Home({ words }: HomeProps) {
         />
       </main>
 
-      <footer className="mt-auto py-6 px-4 border-t border-pink-100 bg-white/80">
+      <footer className="mt-10 py-6 px-4 border-t border-pink-100 bg-white/80">
         <div className="max-w-2xl mx-auto text-center">
-          <div className="text-2xl mb-2">
-            🇹🇭 🌴 🍍 🌺
-          </div>
-          <p className="text-sm text-pink-700">© 2025 The Thai Dictionary</p>
+          <div className="text-2xl mb-2">🇹🇭 🌴 🍍 🌺</div>
+          <p className="text-sm text-pink-700">© {new Date().getFullYear()} The Thai Dictionary</p>
           <div className="flex justify-center gap-4 mt-2">
             <a href="#" className="text-purple-600 hover:text-purple-800">
               📸 Instagram
