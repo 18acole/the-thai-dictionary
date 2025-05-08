@@ -32,7 +32,7 @@ export default function TableRow({ word, language }: TableRowProps) {
 
   return (
     <tr className="border-b border-pink-50 hover:bg-pink-50">
-      <td className="py-4 text-purple-800">
+      <td className="py-4 text-purple-800 font-medium">
         {language === 'english' ? word.english : word.chinese}
       </td>
       
@@ -45,7 +45,7 @@ export default function TableRow({ word, language }: TableRowProps) {
         <button
           onClick={playAudio}
           disabled={isPlaying}
-          className="text-gray-500 hover:text-purple-600"
+          className="text-gray-500 hover:text-purple-600 focus:outline-none"
         >
           {isPlaying ? '🔊' : '🔊'}
         </button>

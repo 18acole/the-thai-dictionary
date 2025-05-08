@@ -46,21 +46,23 @@ export default function Home({ words }: HomeProps) {
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-pink-50 flex flex-col">
       <Header language={language} setLanguage={setLanguage} />
       
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-center text-purple-700 mb-6">
-          The Thai Dictionary 🇹🇭
-        </h1>
-        
-        <SearchBar 
-          searchQuery={searchQuery} 
-          setSearchQuery={setSearchQuery}
-          language={language}
-        />
-        
-        <p className="text-center mt-3 mb-8 text-purple-500 cursor-pointer hover:text-purple-700"
-           onClick={() => setIsModalOpen(true)}>
-          Can't find a word? Request it here 📩
-        </p>
+      <main className="flex-1 flex flex-col items-center px-4 py-8">
+        <div className="w-full max-w-xl mx-auto mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-center text-purple-700 mb-6">
+            The Thai Dictionary 🇹🇭
+          </h1>
+          
+          <SearchBar 
+            searchQuery={searchQuery} 
+            setSearchQuery={setSearchQuery}
+            language={language}
+          />
+          
+          <p className="text-center mt-3 mb-8 text-purple-500 cursor-pointer hover:text-purple-700"
+             onClick={() => setIsModalOpen(true)}>
+            Can't find a word? Request it here 📩
+          </p>
+        </div>
         
         <DictionaryTable 
           words={filteredWords} 
@@ -68,18 +70,20 @@ export default function Home({ words }: HomeProps) {
         />
       </main>
 
-      <footer className="mt-12 py-6 text-center text-sm text-pink-700">
-        <div className="text-2xl mb-2">
-          🇹🇭 🌴 🍍 🌺
-        </div>
-        <p>© 2025 The Thai Dictionary</p>
-        <div className="flex justify-center gap-4 mt-2 text-purple-600">
-          <a href="#" className="hover:text-purple-800">
-            📸 Instagram
-          </a>
-          <a href="#" className="hover:text-purple-800">
-            🐦 Twitter
-          </a>
+      <footer className="mt-auto py-6 px-4 border-t border-pink-100 bg-white/80">
+        <div className="max-w-2xl mx-auto text-center">
+          <div className="text-2xl mb-2">
+            🇹🇭 🌴 🍍 🌺
+          </div>
+          <p className="text-sm text-pink-700">© 2025 The Thai Dictionary</p>
+          <div className="flex justify-center gap-4 mt-2">
+            <a href="#" className="text-purple-600 hover:text-purple-800">
+              📸 Instagram
+            </a>
+            <a href="#" className="text-purple-600 hover:text-purple-800">
+              🐦 Twitter
+            </a>
+          </div>
         </div>
       </footer>
 

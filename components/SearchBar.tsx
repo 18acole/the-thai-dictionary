@@ -24,17 +24,19 @@ export default function SearchBar({ searchQuery, setSearchQuery, language }: Sea
           value={searchQuery}
           onChange={handleInputChange}
           placeholder="🔎 Search Thai words..."
-          className="w-full h-14 pl-4 pr-12 text-lg rounded-full border-2 border-pink-300 focus:border-purple-500 shadow-md"
+          className="w-full h-14 pl-4 pr-24 text-lg rounded-full border-2 border-pink-300 focus:border-purple-500 shadow-md"
         />
         <button 
           type="submit"
           className="absolute right-1 top-1 h-12 px-6 rounded-full text-white font-semibold bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700"
         >
-          Search
+          <span className="flex items-center">
+            Search
+          </span>
         </button>
       </div>
-      <p className="text-center text-sm mt-2 text-purple-400">
-        Instantly find Thai translations ✨
+      <p className="text-center text-pink-700">
+        Instantly find Thai translations 🇹🇭✨
       </p>
     </form>
   );
