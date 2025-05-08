@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import { sanityClient } from '../lib/sanity';
 import Header from '../components/Header';
@@ -24,28 +24,6 @@ export default function Home({ words }: HomeProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredWords, setFilteredWords] = useState<Word[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showHeaderSearch, setShowHeaderSearch] = useState(false);
-  const searchSectionRef = useRef<HTMLDivElement>(null);
-
-  // Handle scrolling to show/hide header search
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!searchSectionRef.current) return;
-      
-      const searchSectionPosition = searchSectionRef.current.getBoundingClientRect();
-      // Show header search when the main search section goes out of view
-      if (searchSectionPosition.bottom < 0) {
-        setShowHeaderSearch(true);
-      } else {
-        setShowHeaderSearch(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   useEffect(() => {
     if (!searchQuery.trim()) {
@@ -66,16 +44,10 @@ export default function Home({ words }: HomeProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-pink-50 flex flex-col">
-      <Header 
-        language={language} 
-        setLanguage={setLanguage} 
-        showSearch={showHeaderSearch}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-      />
+      <Header language={language} setLanguage={setLanguage} />
       
       <main className="flex-1 flex flex-col items-center px-4 py-8">
-        <div className="w-full max-w-xl mx-auto mb-8" ref={searchSectionRef}>
+        <div className="w-full max-w-xl mx-auto mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-center text-purple-700 mb-6">
             The Thai Dictionary 🇹🇭
           </h1>
