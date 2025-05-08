@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: #fcf8ff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Custom styles */
+:root {
+  --thai-pink: #FF86C8;
+  --thai-purple: #9A4EFF;
+  --thai-yellow: #FFD166;
+}
+
+.bg-thai-gradient {
+  background: linear-gradient(135deg, var(--thai-pink), var(--thai-purple));
+}
+
+.text-thai-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(135deg, var(--thai-pink), var(--thai-purple));
+}
+
+::selection {
+  background-color: rgba(154, 78, 255, 0.3);
+}
