@@ -79,14 +79,6 @@ export default function Home({ words }: HomeProps) {
         <div className="max-w-2xl mx-auto text-center">
           <div className="text-2xl mb-2">🇹🇭 🌴 🍍 🌺</div>
           <p className="text-sm text-pink-700">© {new Date().getFullYear()} The Thai Dictionary</p>
-          <div className="flex justify-center gap-4 mt-2">
-            <a href="#" className="text-purple-600 hover:text-purple-800">
-              📸 Instagram
-            </a>
-            <a href="#" className="text-purple-600 hover:text-purple-800">
-              🐦 Twitter
-            </a>
-          </div>
         </div>
       </footer>
 
