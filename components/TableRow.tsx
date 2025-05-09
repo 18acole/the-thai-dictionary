@@ -38,7 +38,11 @@ export default function TableRow({ word, language }: TableRowProps) {
       
       <td className="py-4">
         <div className="text-purple-800">{word.thai}</div>
-        <div className="text-xs text-gray-500">{word.romanized}</div>
+        <div className="text-xs text-gray-500">
+          {language === 'english' 
+            ? word.romanized 
+            : word.pinyin || word.romanized /* Fallback to romanized if pinyin not available */}
+        </div>
       </td>
       
       <td className="py-4 text-center">

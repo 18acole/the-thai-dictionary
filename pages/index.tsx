@@ -13,6 +13,7 @@ export interface Word {
   chinese: string;
   thai: string;
   romanized: string;
+  pinyin?: string; // Optional pinyin pronunciation for Chinese users
   audioUrl: string;
 }
 

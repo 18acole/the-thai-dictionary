@@ -2,9 +2,10 @@ import { useState } from 'react';
 
 interface RequestWordModalProps {
   onClose: () => void;
+  language?: 'english' | 'chinese';
 }
 
-export default function RequestWordModal({ onClose }: RequestWordModalProps) {
+export default function RequestWordModal({ onClose, language = 'english' }: RequestWordModalProps) {
   const [word, setWord] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState('');

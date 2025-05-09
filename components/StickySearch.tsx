@@ -141,9 +141,11 @@ export default function StickySearch({
                         </span>
                         <span className="mx-2 text-gray-400">—</span>
                         <span className="text-pink-600">{word.thai}</span>
-                        {word.romanized && (
-                          <span className="text-gray-500 ml-2 italic">({word.romanized})</span>
-                        )}
+                        <span className="text-gray-500 ml-2 italic">
+                          ({language === 'english' 
+                            ? word.romanized 
+                            : word.pinyin || word.romanized})
+                        </span>
                       </button>
                     ))}
                   </div>
