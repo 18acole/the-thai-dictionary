@@ -15,7 +15,7 @@ export default function RequestWordModal({ onClose, language = 'english' }: Requ
     e.preventDefault();
     
     if (!word.trim()) {
-      setMessage('Please enter a word');
+      setMessage(language === 'english' ? 'Please enter a word' : '请输入一个单词');
       return;
     }
     
@@ -41,11 +41,15 @@ export default function RequestWordModal({ onClose, language = 'english' }: Requ
         }, 3000);
       } else {
         setIsSuccess(false);
-        setMessage(data.message || 'Something went wrong. Please try again.');
+        setMessage(data.message || (language === 'english' 
+          ? 'Something went wrong. Please try again.' 
+          : '出错了，请重试。'));
       }
     } catch (error) {
       setIsSuccess(false);
-      setMessage('Network error. Please try again.');
+      setMessage(language === 'english' 
+        ? 'Network error. Please try again.' 
+        : '网络错误，请重试。');
     } finally {
       setIsSubmitting(false);
     }
@@ -55,13 +59,15 @@ export default function RequestWordModal({ onClose, language = 'english' }: Requ
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-pink-300 rounded-lg shadow-xl w-full max-w-md overflow-hidden">
         <div className="py-4 px-6 border-b border-pink-200">
-          <h3 className="text-purple-700 text-xl font-bold">Request a Word 📝</h3>
+          <h3 className="text-purple-700 text-xl font-bold">
+            {language === 'english' ? 'Request a Word 📝' : '请求添加单词 📝'}
+          </h3>
         </div>
         
         <form onSubmit={handleSubmit} className="p-6">
           <div className="mb-6">
             <label className="block text-purple-800 text-sm font-bold mb-2" htmlFor="word">
-              Word to request:
+              {language === 'english' ? 'Word to request:' : '请求添加的单词:'}
             </label>
             <input
               type="text"
@@ -69,7 +75,9 @@ export default function RequestWordModal({ onClose, language = 'english' }: Requ
               value={word}
               onChange={(e) => setWord(e.target.value)}
               className="appearance-none border-2 border-pink-200 rounded-lg w-full py-2 px-3 text-purple-800 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              placeholder="Enter word you'd like to be added"
+              placeholder={language === 'english' 
+                ? "Enter word you'd like to be added" 
+                : "输入您想要添加的单词"}
             />
           </div>
           
@@ -86,7 +94,7 @@ export default function RequestWordModal({ onClose, language = 'english' }: Requ
               className="px-4 py-2 text-pink-700 hover:text-pink-800 transition-colors"
               disabled={isSubmitting}
             >
-              Cancel
+              {language === 'english' ? 'Cancel' : '取消'}
             </button>
             <button
               type="submit"
@@ -95,7 +103,9 @@ export default function RequestWordModal({ onClose, language = 'english' }: Requ
               }`}
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Submitting...' : 'Submit Request'}
+              {isSubmitting 
+                ? (language === 'english' ? 'Submitting...' : '提交中...') 
+                : (language === 'english' ? 'Submit Request' : '提交请求')}
             </button>
           </div>
         </form>

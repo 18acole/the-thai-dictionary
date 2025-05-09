@@ -102,7 +102,10 @@ export default function Home({ words }: HomeProps) {
       </footer>
 
       {isModalOpen && (
-        <RequestWordModal onClose={() => setIsModalOpen(false)} />
+        <RequestWordModal 
+          onClose={() => setIsModalOpen(false)} 
+          language={language}
+        />
       )}
     </div>
   );
