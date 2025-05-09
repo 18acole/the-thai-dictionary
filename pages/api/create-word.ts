@@ -38,9 +38,15 @@ export default async function handler(
 
     // Create Sanity client with token
     const client = createClient({
-      ...sanityConfig,
+      projectId: sanityConfig.projectId,
+      dataset: sanityConfig.dataset,
+      apiVersion: sanityConfig.apiVersion,
+      token: process.env.SANITY_TOKEN || '',
       useCdn: false, // Use fresh data for mutations
     });
+    
+    // Log token status for debugging
+    console.log('Sanity token available:', !!process.env.SANITY_TOKEN);
 
     // Create the document
     const result = await client.create({
