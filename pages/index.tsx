@@ -53,6 +53,7 @@ export default function Home({ words }: HomeProps) {
           searchQuery={searchQuery} 
           setSearchQuery={setSearchQuery}
           language={language}
+          allWords={words}
         />
       </div>
       

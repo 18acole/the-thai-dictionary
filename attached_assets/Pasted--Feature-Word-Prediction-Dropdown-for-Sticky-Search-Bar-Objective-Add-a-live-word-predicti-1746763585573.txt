@@ -1,0 +1,92 @@
+🔍 Feature: Word Prediction Dropdown (for Sticky Search Bar)
+
+🎯 Objective
+
+Add a live word prediction dropdown beneath the sticky search bar input. This will enhance the search experience by suggesting real-time matches as the user types — using words already loaded into memory (from Sanity CMS).
+
+This should be a non-invasive addition: do not modify the existing hero layout or hero search input.
+
+🧠 Behavior Overview
+
+Appears only while typing in the sticky header search bar
+
+Dynamically filters matches from the full word list in memory
+
+Matches based on English or Chinese fields
+
+Shows max 5 suggestions
+
+Clicking a suggestion fills the search field and triggers search
+
+💻 Implementation Guide
+
+1. State Setup
+
+const [filteredSuggestions, setFilteredSuggestions] = useState([])
+
+2. Filter Logic (inside useEffect)
+
+useEffect(() => {
+  const input = searchQuery.toLowerCase()
+  if (input.length === 0) {
+    setFilteredSuggestions([])
+  } else {
+    const matches = allWords.filter(word =>
+      word.english.toLowerCase().includes(input) ||
+      word.chinese?.toLowerCase().includes(input)
+    )
+    setFilteredSuggestions(matches.slice(0, 5))
+  }
+}, [searchQuery])
+
+3. Wrap the Input in a Relative Container
+
+<div className="relative w-full">
+  <input ... />
+  {/* Dropdown renders here */}
+</div>
+
+4. Render Dropdown if Matches Found
+
+{filteredSuggestions.length > 0 && (
+  <div className="absolute top-full mt-2 w-full bg-white border border-pink-200 rounded-xl shadow-lg z-50">
+    {filteredSuggestions.map((item, idx) => (
+      <button
+        key={idx}
+        onClick={() => {
+          setSearchQuery(item.english)
+          setFilteredSuggestions([])
+          handleSearch()
+        }}
+        className="w-full text-left px-4 py-2 hover:bg-pink-50"
+      >
+        {item.english} — {item.thai}
+      </button>
+    ))}
+  </div>
+)}
+
+🎨 Styling Notes
+
+Match dropdown visual style to existing design
+
+Use: rounded-xl, shadow-lg, border-pink-200, hover:bg-pink-50
+
+Spacing: mt-2, px-4, py-2
+
+Font: text-sm, readable, consistent with current layout
+
+🔐 Constraints
+
+✅ Only applies to the sticky header input
+
+❌ Do not apply to hero search input
+
+✅ Use only client-side filtering
+
+✅ Keep dropdown accessible (keyboard navigable later if needed)
+
+✅ Summary
+
+Add a live word prediction dropdown under the sticky header search bar using in-memory word data. Keep design consistent with the app’s soft, emoji-friendly, pastel theme. Do not touch any existing layout or components.
+
