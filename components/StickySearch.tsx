@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
-
+import { useState, useEffect } from 'react';
 import { Word } from '../pages/index';
 
 interface StickySearchProps {
@@ -9,50 +8,39 @@ interface StickySearchProps {
   allWords?: Word[];
 }
 
-export default function StickySearch({ searchQuery, setSearchQuery, language = 'english', allWords = [] }: StickySearchProps) {
+export default function StickySearch({ 
+  searchQuery, 
+  setSearchQuery, 
+  language = 'english', 
+  allWords = [] 
+}: StickySearchProps) {
   const [isVisible, setIsVisible] = useState(false);
-  const [filteredSuggestions, setFilteredSuggestions] = useState<Word[]>([]);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
+  const [suggestions, setSuggestions] = useState<Word[]>([]);
+  
+  // Handle scroll visibility
   useEffect(() => {
-    // Function to handle scroll
-    const handleScroll = () => {
-      // Show sticky search when scrolled down 300px
+    function handleScroll() {
       const scrollPosition = window.scrollY || document.documentElement.scrollTop;
-      
-      // Using the threshold with a clean toggle
       setIsVisible(scrollPosition > 300);
-    };
-
-    // Add scroll event listener with passive option for better performance
+    }
+    
     window.addEventListener('scroll', handleScroll, { passive: true });
-
-    // Check initial position
-    handleScroll();
-
-    // Remove event listener on cleanup
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    handleScroll(); // Initial check
+    
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  // Filter suggestions based on search query
+  // Handle search suggestions
   useEffect(() => {
-    // Only show suggestions when focused and typing
     const input = searchQuery.toLowerCase().trim();
     
-    // Clear suggestions if input is empty or too short
-    if (input.length < 2) {
-      setFilteredSuggestions([]);
+    // Only show suggestions when input is 2+ characters
+    if (input.length < 2 || !allWords?.length) {
+      setSuggestions([]);
       return;
     }
     
-    // Make sure allWords is available and not empty
-    if (!allWords || allWords.length === 0) {
-      return;
-    }
-    
-    // Filter words based on language
+    // Filter based on the current language
     const matches = allWords.filter(word => {
       if (language === 'english' && word.english) {
         return word.english.toLowerCase().includes(input);
@@ -62,26 +50,38 @@ export default function StickySearch({ searchQuery, setSearchQuery, language = '
       return false;
     });
     
-    // Limit to 5 results
-    setFilteredSuggestions(matches.slice(0, 5));
+    setSuggestions(matches.slice(0, 5)); // Max 5 suggestions
   }, [searchQuery, language, allWords]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Search is real-time, this just prevents form submission
-  };
   
-  const handleSelectSuggestion = (suggestion: Word) => {
-    // Set the search query to the selected suggestion's English or Chinese word
-    setSearchQuery(language === 'english' ? suggestion.english : suggestion.chinese);
-    // Clear the suggestions
-    setFilteredSuggestions([]);
-  };
-
+  // Handle input change
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearchQuery(e.target.value);
+  }
+  
+  // Handle suggestion selection
+  function handleSelectSuggestion(word: Word) {
+    setSearchQuery(language === 'english' ? word.english : word.chinese);
+    setSuggestions([]);
+  }
+  
+  // Handle form submission
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setSuggestions([]); // Clear suggestions on submit
+  }
+  
+  // Handle click outside (using document click listener)
+  useEffect(() => {
+    function handleDocumentClick() {
+      setSuggestions([]);
+    }
+    
+    if (suggestions.length > 0) {
+      document.addEventListener('click', handleDocumentClick);
+      return () => document.removeEventListener('click', handleDocumentClick);
+    }
+  }, [suggestions.length]);
+  
   return (
     <div 
       className={`fixed top-14 left-0 right-0 z-30 w-full transition-all duration-200 ease-in-out ${
@@ -106,21 +106,29 @@ export default function StickySearch({ searchQuery, setSearchQuery, language = '
               />
               
               {/* Word prediction dropdown */}
-              {filteredSuggestions.length > 0 && (
-                <div className="absolute top-full mt-2 w-full bg-white border border-pink-200 rounded-xl shadow-lg z-50 overflow-hidden">
+              {suggestions.length > 0 && (
+                <div 
+                  className="absolute top-full mt-2 w-full bg-white border border-pink-200 rounded-xl shadow-lg z-50 overflow-hidden"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <div className="py-1">
-                    {filteredSuggestions.map((item, idx) => (
+                    {suggestions.map((word, idx) => (
                       <button
-                        key={item._id || idx}
+                        key={word._id || idx}
                         type="button"
-                        onClick={() => handleSelectSuggestion(item)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleSelectSuggestion(word);
+                        }}
                         className="w-full text-left px-4 py-2 hover:bg-pink-50 transition-colors text-sm border-b last:border-b-0 border-pink-100"
                       >
-                        <span className="font-medium">{language === 'english' ? item.english : item.chinese}</span>
+                        <span className="font-medium">
+                          {language === 'english' ? word.english : word.chinese}
+                        </span>
                         <span className="mx-2 text-gray-400">—</span>
-                        <span className="text-pink-600">{item.thai}</span>
-                        {item.romanized && (
-                          <span className="text-gray-500 ml-2 italic">({item.romanized})</span>
+                        <span className="text-pink-600">{word.thai}</span>
+                        {word.romanized && (
+                          <span className="text-gray-500 ml-2 italic">({word.romanized})</span>
                         )}
                       </button>
                     ))}
