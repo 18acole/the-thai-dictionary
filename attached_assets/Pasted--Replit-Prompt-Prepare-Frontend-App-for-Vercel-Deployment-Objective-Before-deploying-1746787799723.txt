@@ -1,0 +1,75 @@
+# ✅ Replit Prompt: Prepare Frontend App for Vercel Deployment
+
+## 🎯 Objective
+
+Before deploying the frontend app to Vercel, ensure the codebase in Replit is clean, organized, and ready to be pushed to GitHub for deployment.
+
+---
+
+## 🔍 Task
+
+Check and prepare the Replit project structure and content to ensure it’s suitable for standalone deployment to Vercel.
+
+---
+
+## ✅ What to Check
+
+### 1. **Standalone Frontend App Folder**
+
+Ensure the Replit project contains only the frontend Next.js app and is **not mixed** with Sanity Studio files.
+
+Expected folder structure:
+
+```
+/ (root of Replit project)
+  /app
+  /components
+  /lib
+  /public
+  next.config.js
+  package.json
+  tsconfig.json (if using TypeScript)
+```
+
+There should **not** be any `sanity.config.ts`, `schemas`, or unrelated CMS files in this app.
+
+### 2. **Working Next.js App**
+
+* The app runs properly in Replit with no build or runtime errors.
+* The dictionary entries are being fetched from Sanity and rendered.
+* The search and clear functionality work correctly.
+
+### 3. **Git is Initialized**
+
+Check if Git is initialized (`.git` folder exists). If not, initialize it:
+
+```bash
+git init
+git add .
+git commit -m "Prepare for Vercel deployment"
+```
+
+### 4. **Sanity Environment Variables Are Defined**
+
+Make sure the following are present in the Replit Secrets (.env equivalent):
+
+* `SANITY_PROJECT_ID`
+* `SANITY_DATASET`
+* `SANITY_API_VERSION`
+
+> These will also need to be set again on Vercel during deployment.
+
+### 5. **No Hardcoded localhost or dev URLs**
+
+Ensure there are no references to `localhost` or local-only logic in any API calls or Sanity client setup.
+
+---
+
+## 📦 Output
+
+If everything above is ready:
+
+* Confirm that the app is ready to be pushed to GitHub and deployed via Vercel
+* Optionally generate a `.env.example` file and ensure `.env` is in `.gitignore`
+
+If anything is missing or mixed with the CMS, please separate the code and notify the user.
