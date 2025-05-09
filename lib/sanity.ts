@@ -112,12 +112,12 @@ const fallbackData = [
   },
 ];
 
-// Sanity configuration using environment variables or hardcoded values for project use
+// Sanity configuration using environment variables
 export const sanityConfig = {
-  projectId: '6eq4ev4u',
-  dataset: 'production',
-  apiVersion: '2023-05-01',
-  token: 'skop3Jgt4T0gBK02o6pzRcXWaooRIgCFvZQBvYsSw9OstWkqLH7XaNPkGvjLwPVXzfiGMe6oFP1q0xO0SVYMnaGL33dpS7BWwZRlptpWMtZ7gTHCBNThlDcADFDKK7piAsuBcsPJgzNJYbLj5E9P2tW7NkfRy9gvc45NYQROGHFGFQn8w3eI',
+  projectId: process.env.SANITY_PROJECT_ID || '',
+  dataset: process.env.SANITY_DATASET || 'production',
+  apiVersion: process.env.SANITY_API_VERSION || '2023-05-01',
+  token: process.env.SANITY_TOKEN || '',
   useCdn: false, // We want always fresh content
 };
 

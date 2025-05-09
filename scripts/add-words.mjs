@@ -72,7 +72,8 @@ async function addWords() {
     try {
       console.log(`Adding word ${i+1}/${words.length}: "${word.english}" (${word.thai})`);
       
-      const response = await fetch('http://localhost:5000/api/create-word', {
+      // Use relative URL that works in any environment
+      const response = await fetch('/api/create-word', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
