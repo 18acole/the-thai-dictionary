@@ -39,7 +39,7 @@ export default function Header({ language, setLanguage }: HeaderProps) {
             aria-expanded={isDropdownOpen}
           >
             <span className="text-pink-500 text-lg">🌐</span>
-            <span>{language === 'english' ? 'us English' : 'cn Chinese'}</span>
+            <span>{language === 'english' ? '🇬🇧 English' : '🇨🇳 Chinese'}</span>
           </button>
           
           {isDropdownOpen && (
@@ -52,7 +52,7 @@ export default function Header({ language, setLanguage }: HeaderProps) {
                   onClick={() => selectLanguage('english')}
                   role="menuitem"
                 >
-                  us English
+                  🇬🇧 English
                 </button>
                 <button
                   className={`${
@@ -61,7 +61,7 @@ export default function Header({ language, setLanguage }: HeaderProps) {
                   onClick={() => selectLanguage('chinese')}
                   role="menuitem"
                 >
-                  cn Chinese
+                  🇨🇳 Chinese
                 </button>
               </div>
             </div>
