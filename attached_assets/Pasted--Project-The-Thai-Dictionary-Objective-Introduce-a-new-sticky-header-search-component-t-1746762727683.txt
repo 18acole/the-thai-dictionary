@@ -1,0 +1,98 @@
+📘 Project: The Thai Dictionary 🇹🇭
+
+🎯 Objective
+
+Introduce a new sticky header search component that appears only when the user scrolls down the page — without modifying the existing layout or design in any way. This sticky search bar should match the existing visual design system and improve UX for users navigating the word list.
+
+🆕 Feature: Sticky Search Bar on Scroll
+
+🔁 Behavior
+
+This is a second, standalone component.
+
+It must not affect or alter the current centered hero search bar.
+
+Appears only after the user scrolls down approximately 300px.
+
+Use useEffect and useState in React to control visibility based on window.scrollY.
+
+It should fade in or slide in smoothly — not snap.
+
+📌 Sticky Positioning
+
+Use Tailwind classes:
+
+sticky top-0 z-30
+
+The sticky bar should overlay the content beneath it.
+
+It should not occupy space at initial load or shift layout.
+
+🎨 Styling – Match Existing Design System
+
+Use the same Tailwind design tokens and styling already used throughout the app:
+
+Wrapper Container
+
+Background: bg-white/80 or bg-gradient-to-br from-orange-50 to-pink-50
+
+Border bottom: border-b border-pink-200
+
+Shadow: shadow-sm
+
+Padding: py-2 px-4
+
+Width constraint: max-w-xl mx-auto
+
+Inner Form
+
+Layout: flex gap-2 items-center
+
+Form width: w-full
+
+Input Field
+
+Placeholder: 🔍 Search Thai...
+
+Rounded full pill: rounded-full
+
+Border: border border-pink-300
+
+Padding: px-4 py-2
+
+Font: text-sm
+
+Focus ring: focus:outline-none focus:ring-2 focus:ring-purple-500
+
+Search Button
+
+Text: Search
+
+Background gradient: bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700
+
+Text color: text-white
+
+Padding: px-4 py-2
+
+Font size: text-sm
+
+Rounded: rounded-full
+
+Weight: font-medium
+
+🧼 Design Constraints
+
+❌ Do not touch the existing hero layout, header, or search bar.
+
+❌ Do not reuse the original component — this is a new, separate component.
+
+✅ Use only existing colors, spacing, typography, and corner styles.
+
+✅ Keep emoji-friendly, soft, and inviting feel.
+
+✅ Ensure accessibility and responsiveness.
+
+✅ Summary
+
+Add a second sticky search component that enhances usability for repeat searches — matching the original design system visually and behaviorally, without altering the original layout.
+

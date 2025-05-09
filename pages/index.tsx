@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next';
 import { sanityClient } from '../lib/sanity';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
+import StickySearch from '../components/StickySearch';
 import DictionaryTable from '../components/DictionaryTable';
 import RequestWordModal from '../components/RequestWordModal';
 
@@ -45,6 +46,13 @@ export default function Home({ words }: HomeProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-pink-50 flex flex-col">
       <Header language={language} setLanguage={setLanguage} />
+      
+      {/* Sticky Search that appears on scroll */}
+      <StickySearch 
+        searchQuery={searchQuery} 
+        setSearchQuery={setSearchQuery}
+        language={language}
+      />
       
       <main className="flex-1 flex flex-col items-center px-4 py-8">
         <div className="w-full max-w-xl mx-auto mb-8">

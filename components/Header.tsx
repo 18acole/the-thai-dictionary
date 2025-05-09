@@ -30,7 +30,7 @@ export default function Header({ language, setLanguage }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-pink-100 p-3">
+    <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-sm border-b border-pink-100 p-3">
       <div className="max-w-4xl mx-auto px-4 flex justify-between items-center">
         <div className="relative" ref={dropdownRef}>
           <button
