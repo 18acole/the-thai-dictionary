@@ -22,8 +22,13 @@ export default async function handler(
       token: sanityConfig.token ? '[REDACTED]' : undefined,
     };
     
+    // Check if we're using real data or fallback data
+    const usingFallbackData = words && words[0] && words[0]._id === '1';
+    
     res.status(200).json({
-      message: 'Sanity connection check',
+      message: usingFallbackData 
+        ? 'Sanity connection succeeded but using fallback data (no Sanity content found)' 
+        : 'Sanity connection successful with real data',
       config: configToReturn,
       words: words.slice(0, 3), // Only return first 3 words for brevity
     });
