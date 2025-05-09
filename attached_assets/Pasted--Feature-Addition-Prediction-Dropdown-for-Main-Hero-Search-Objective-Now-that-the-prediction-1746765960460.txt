@@ -1,0 +1,93 @@
+🔁 Feature Addition: Prediction Dropdown for Main Hero Search
+
+🎯 Objective
+
+Now that the prediction dropdown works well in the sticky search bar, replicate the same functionality for the main (hero) search bar on the landing page. Ensure the user can type in the main input and receive live suggestions from the in-memory word list.
+
+This feature should mirror the behavior of the sticky bar but be scoped specifically to the hero input.
+
+✅ UX Goals
+
+Predictive suggestions appear below the hero search input while typing
+
+Suggestions come from the same in-memory word list (English + Chinese match)
+
+Selecting a suggestion should:
+
+Fill the input
+
+Update global searchQuery
+
+Trigger handleSearch()
+
+Optionally scroll to results
+
+🔧 Implementation Strategy
+
+1. Create Local State for Hero Input
+
+const [heroInputValue, setHeroInputValue] = useState("")
+const [heroSuggestions, setHeroSuggestions] = useState([])
+
+2. Filter Predictions While Typing
+
+useEffect(() => {
+  const input = heroInputValue.toLowerCase()
+  if (input.length === 0) {
+    setHeroSuggestions([])
+  } else {
+    const matches = allWords.filter(word =>
+      word.english.toLowerCase().includes(input) ||
+      word.chinese?.toLowerCase().includes(input)
+    )
+    setHeroSuggestions(matches.slice(0, 5))
+  }
+}, [heroInputValue])
+
+3. Update Global State on Selection or Submit
+
+const submitHeroSearch = (value: string) => {
+  setSearchQuery(value)
+  setHeroSuggestions([])
+  handleSearch()
+  document.getElementById("results")?.scrollIntoView({ behavior: "smooth" })
+}
+
+4. Input + Dropdown JSX
+
+Wrap input in a relative container and render the dropdown like this:
+
+<div className="relative w-full">
+  <input
+    value={heroInputValue}
+    onChange={(e) => setHeroInputValue(e.target.value)}
+    placeholder="🔍 Search Thai words..."
+    className="w-full h-14 pl-4 pr-12 text-lg rounded-full border-2 border-pink-300 focus:border-purple-500 shadow-md"
+  />
+  {heroSuggestions.length > 0 && (
+    <div className="absolute top-full mt-2 w-full bg-white border border-pink-200 rounded-xl shadow-lg z-50">
+      {heroSuggestions.map((item, idx) => (
+        <button
+          key={idx}
+          onClick={() => submitHeroSearch(item.english)}
+          className="w-full text-left px-4 py-2 hover:bg-pink-50"
+        >
+          {item.english} — {item.thai}
+        </button>
+      ))}
+    </div>
+  )}
+</div>
+
+🧼 Constraints
+
+Keep the hero layout visually unchanged — same spacing, background, and title
+
+Add dropdown underneath without disrupting layout or alignment
+
+Use same Tailwind styling as sticky version for consistency
+
+✅ Summary
+
+Add the same real-time prediction functionality from the sticky header to the main hero search input. Use local input state, filter matches from allWords, and update global state only when user submits or clicks a suggestion.
+

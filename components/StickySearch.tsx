@@ -31,10 +31,11 @@ export default function StickySearch({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  // Sync input value with searchQuery when searchQuery changes externally
+  // Sync input value with searchQuery when component initializes
   useEffect(() => {
     setStickyInputValue(searchQuery);
-  }, [searchQuery]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   
   // Handle search suggestions based on local input value
   useEffect(() => {

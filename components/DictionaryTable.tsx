@@ -8,7 +8,7 @@ interface DictionaryTableProps {
 
 export default function DictionaryTable({ words, language }: DictionaryTableProps) {
   return (
-    <div className="w-full max-w-2xl mx-auto overflow-x-auto">
+    <div id="results" className="w-full max-w-2xl mx-auto overflow-x-auto">
       <div className="bg-white rounded-xl shadow-lg p-4 border border-pink-200">
         <table className="w-full">
           <thead>
