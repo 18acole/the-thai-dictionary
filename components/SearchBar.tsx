@@ -136,7 +136,9 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, allWo
         )}
       </div>
       <p className="text-center text-pink-700">
-        Learn Thai instantly — from a native, not a robot 🤖❌
+        {language === 'english'
+          ? "Learn Thai instantly — from a native, not a robot 🤖❌"
+          : "由泰国本地人发音，不是机器人 🤖❌"}
       </p>
     </form>
   );
