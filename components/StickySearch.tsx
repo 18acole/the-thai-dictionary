@@ -15,6 +15,7 @@ export default function StickySearch({
   allWords = [] 
 }: StickySearchProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [stickyInputValue, setStickyInputValue] = useState(''); // Local state for sticky search
   const [suggestions, setSuggestions] = useState<Word[]>([]);
   
   // Handle scroll visibility
@@ -30,9 +31,14 @@ export default function StickySearch({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  // Handle search suggestions
+  // Sync input value with searchQuery when searchQuery changes externally
   useEffect(() => {
-    const input = searchQuery.toLowerCase().trim();
+    setStickyInputValue(searchQuery);
+  }, [searchQuery]);
+  
+  // Handle search suggestions based on local input value
+  useEffect(() => {
+    const input = stickyInputValue.toLowerCase().trim();
     
     // Only show suggestions when input is 2+ characters
     if (input.length < 2 || !allWords?.length) {
@@ -51,26 +57,33 @@ export default function StickySearch({
     });
     
     setSuggestions(matches.slice(0, 5)); // Max 5 suggestions
-  }, [searchQuery, language, allWords]);
+  }, [stickyInputValue, language, allWords]);
   
-  // Handle input change
+  // Handle input change - only update local state
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setSearchQuery(e.target.value);
+    setStickyInputValue(e.target.value);
+  }
+  
+  // Submit search function
+  function submitSearch(value: string) {
+    setSearchQuery(value); // Update global search query
+    setSuggestions([]); // Close dropdown
   }
   
   // Handle suggestion selection
   function handleSelectSuggestion(word: Word) {
-    setSearchQuery(language === 'english' ? word.english : word.chinese);
-    setSuggestions([]);
+    const value = language === 'english' ? word.english : word.chinese;
+    setStickyInputValue(value);
+    submitSearch(value);
   }
   
   // Handle form submission
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSuggestions([]); // Clear suggestions on submit
+    submitSearch(stickyInputValue);
   }
   
-  // Handle click outside (using document click listener)
+  // Handle click outside to close dropdown
   useEffect(() => {
     function handleDocumentClick() {
       setSuggestions([]);
@@ -97,7 +110,7 @@ export default function StickySearch({
             <div className="relative flex-1">
               <input
                 type="text"
-                value={searchQuery}
+                value={stickyInputValue}
                 onChange={handleChange}
                 placeholder={language === 'english' 
                   ? "🔍 Search Thai..."

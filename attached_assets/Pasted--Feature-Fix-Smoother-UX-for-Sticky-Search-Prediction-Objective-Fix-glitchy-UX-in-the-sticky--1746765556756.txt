@@ -1,0 +1,95 @@
+✅ Feature Fix: Smoother UX for Sticky Search Prediction
+
+🎯 Objective
+
+Fix glitchy UX in the sticky header search bar where typing causes unexpected scroll-to-top behavior. Do not change any existing layout, hero design, or components. Just isolate and improve the behavior of the sticky search prediction system for a smooth, polished experience.
+
+🧠 Goals
+
+Eliminate scrolling glitches while typing in the sticky search bar
+
+Prevent shared state from triggering rerenders elsewhere
+
+Keep the dropdown suggestions fast and fluid
+
+🔧 Fix Strategy
+
+1. Use Local Input State for Sticky Search
+
+Create a new local state specifically for the sticky search bar:
+
+const [stickyInputValue, setStickyInputValue] = useState("")
+
+This decouples it from the global searchQuery so it doesn’t interfere with the hero input.
+
+2. Filter Suggestions Based on Local Input Only
+
+Use stickyInputValue for live predictions:
+
+useEffect(() => {
+  const input = stickyInputValue.toLowerCase()
+  if (input.length === 0) {
+    setFilteredSuggestions([])
+  } else {
+    const matches = allWords.filter(word =>
+      word.english.toLowerCase().includes(input) ||
+      word.chinese?.toLowerCase().includes(input)
+    )
+    setFilteredSuggestions(matches.slice(0, 5))
+  }
+}, [stickyInputValue])
+
+3. Submit Behavior on Enter or Click
+
+Only on selection or form submit should the input update the global state:
+
+const submitSearch = (value: string) => {
+  setSearchQuery(value)        // global query
+  setFilteredSuggestions([])  // close dropdown
+  handleSearch()              // trigger search
+  document.getElementById("results")?.scrollIntoView({ behavior: "smooth" })
+}
+
+On click:
+
+<button onClick={() => submitSearch(item.english)}>
+
+On Enter:
+
+<form onSubmit={(e) => {
+  e.preventDefault()
+  submitSearch(stickyInputValue)
+}}>
+
+4. Avoid Auto-Focus or Scroll Into View While Typing
+
+Make sure you do not call:
+
+inputRef.current.focus()
+
+scrollIntoView() during typing
+
+location.href = "#results"
+
+These will cause page jumpbacks during typing.
+
+✅ UX Flow Summary
+
+Sticky search bar manages its own state (stickyInputValue)
+
+Dropdown suggestions are based on that local value only
+
+Global searchQuery only updates when:
+
+A prediction is clicked
+
+Form is submitted
+
+Scroll into view only happens after triggering a search
+
+Everything else on the page remains visually and structurally unchanged
+
+🧼 Design Rule
+
+Do not modify or affect the existing hero layout, spacing, styles, or state.
+Just fix the sticky header interaction in isolation.
