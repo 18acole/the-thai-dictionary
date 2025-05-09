@@ -2,64 +2,8 @@
 import fetch from 'node-fetch';
 
 // List of Thai words with translations
-// The first 6 words were added successfully, continuing with the rest
+// Adding the final 7 words (14 already added successfully)
 const words = [
-  {
-    english: "Sorry",
-    chinese: "对不起",
-    thai: "ขอโทษ",
-    romanized: "Kho thot",
-    pinyin: "Duìbùqǐ",
-    audioUrl: "https://upload.wikimedia.org/wikipedia/commons/0/02/Th-kho_thot_khrap.ogg"
-  },
-  {
-    english: "Friend",
-    chinese: "朋友",
-    thai: "เพื่อน",
-    romanized: "Pheuan",
-    pinyin: "Péngyǒu",
-    audioUrl: "https://upload.wikimedia.org/wikipedia/commons/5/51/Th-Pheuan.oga"
-  },
-  {
-    english: "Water",
-    chinese: "水",
-    thai: "น้ำ",
-    romanized: "Nam",
-    pinyin: "Shuǐ",
-    audioUrl: "https://upload.wikimedia.org/wikipedia/commons/4/42/Th-nam.ogg"
-  },
-  {
-    english: "Food",
-    chinese: "食物",
-    thai: "อาหาร",
-    romanized: "Aahaan",
-    pinyin: "Shíwù",
-    audioUrl: "https://upload.wikimedia.org/wikipedia/commons/7/7d/Th-aa-haan.ogg"
-  },
-  {
-    english: "Hot",
-    chinese: "热",
-    thai: "ร้อน",
-    romanized: "Ron",
-    pinyin: "Rè",
-    audioUrl: "https://upload.wikimedia.org/wikipedia/commons/1/11/Th-ron.ogg"
-  },
-  {
-    english: "Cold",
-    chinese: "冷",
-    thai: "เย็น",
-    romanized: "Yen",
-    pinyin: "Lěng",
-    audioUrl: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Th-yen.ogg"
-  },
-  {
-    english: "Big",
-    chinese: "大",
-    thai: "ใหญ่",
-    romanized: "Yai",
-    pinyin: "Dà",
-    audioUrl: "https://upload.wikimedia.org/wikipedia/commons/0/03/Th-yai.ogg"
-  },
   {
     english: "Small",
     chinese: "小",
