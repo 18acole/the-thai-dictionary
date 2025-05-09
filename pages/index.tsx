@@ -115,6 +115,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   try {
     // Fetch all dictionary entries from Sanity
     const words = await sanityClient.fetch();
+    console.log('Words fetched from Sanity:', words?.length || 0);
 
     return {
       props: {
