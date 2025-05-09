@@ -47,12 +47,14 @@ export default function Home({ words }: HomeProps) {
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-pink-50 flex flex-col">
       <Header language={language} setLanguage={setLanguage} />
       
-      {/* Sticky Search that appears on scroll */}
-      <StickySearch 
-        searchQuery={searchQuery} 
-        setSearchQuery={setSearchQuery}
-        language={language}
-      />
+      {/* Sticky Search that appears only when scrolled down */}
+      <div className="relative">
+        <StickySearch 
+          searchQuery={searchQuery} 
+          setSearchQuery={setSearchQuery}
+          language={language}
+        />
+      </div>
       
       <main className="flex-1 flex flex-col items-center px-4 py-8">
         <div className="w-full max-w-xl mx-auto mb-8">

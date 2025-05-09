@@ -10,14 +10,20 @@ export default function StickySearch({ searchQuery, setSearchQuery, language = '
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    // Function to handle scroll
     const handleScroll = () => {
       // Show sticky search when scrolled down 300px
-      const scrollY = window.scrollY;
-      setIsVisible(scrollY > 300);
+      const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+      
+      // Using the threshold with a clean toggle
+      setIsVisible(scrollPosition > 300);
     };
 
-    // Add scroll event listener
-    window.addEventListener('scroll', handleScroll);
+    // Add scroll event listener with passive option for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Check initial position
+    handleScroll();
 
     // Remove event listener on cleanup
     return () => {
@@ -36,11 +42,12 @@ export default function StickySearch({ searchQuery, setSearchQuery, language = '
 
   return (
     <div 
-      className={`sticky top-0 z-30 w-full transition-all duration-300 ease-in-out ${
+      className={`fixed top-14 left-0 right-0 z-30 w-full transition-all duration-200 ease-in-out ${
         isVisible 
-          ? 'opacity-100 translate-y-0' 
-          : 'opacity-0 -translate-y-10 pointer-events-none'
+          ? 'opacity-100 transform-none' 
+          : 'opacity-0 -translate-y-5 pointer-events-none'
       }`}
+      aria-hidden={!isVisible}
     >
       <div className="bg-white/90 backdrop-blur-sm shadow-md border-b border-pink-200 py-2 px-4">
         <div className="max-w-xl mx-auto">
