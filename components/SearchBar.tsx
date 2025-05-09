@@ -58,6 +58,14 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, allWo
     }
   };
   
+  // Clear search functionality
+  const clearSearch = () => {
+    setHeroInputValue("");
+    setSearchQuery("");
+    setHeroSuggestions([]);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  
   // Handle suggestion selection
   const handleSelectSuggestion = (word: Word) => {
     const value = language === 'english' ? word.english : word.chinese;
@@ -95,6 +103,16 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, allWo
             : "🔎 搜索泰语单词..."}
           className="w-full h-14 pl-4 pr-24 text-lg rounded-full border-2 border-pink-300 focus:border-purple-500 shadow-md"
         />
+        {heroInputValue && (
+          <button
+            type="button"
+            onClick={clearSearch}
+            className="absolute right-[100px] top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            aria-label="Clear search"
+          >
+            ✖️
+          </button>
+        )}
         <button 
           type="submit"
           className="absolute right-1 top-1 h-12 px-6 rounded-full text-white font-semibold bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700"

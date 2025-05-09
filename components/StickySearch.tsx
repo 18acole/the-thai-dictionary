@@ -71,6 +71,14 @@ export default function StickySearch({
     setSuggestions([]); // Close dropdown
   }
   
+  // Clear search functionality
+  function clearSearch() {
+    setStickyInputValue("");
+    setSearchQuery("");
+    setSuggestions([]);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  
   // Handle suggestion selection
   function handleSelectSuggestion(word: Word) {
     const value = language === 'english' ? word.english : word.chinese;
@@ -118,6 +126,17 @@ export default function StickySearch({
                   : "🔍 搜索泰语..."}
                 className="w-full rounded-full border border-pink-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
+              
+              {stickyInputValue && (
+                <button
+                  type="button"
+                  onClick={clearSearch}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  aria-label="Clear search"
+                >
+                  ✖️
+                </button>
+              )}
               
               {/* Word prediction dropdown */}
               {suggestions.length > 0 && (
