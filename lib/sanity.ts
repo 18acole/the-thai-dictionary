@@ -112,21 +112,20 @@ const fallbackData = [
   },
 ];
 
-// Sanity configuration using environment variables
+// Sanity configuration using environment variables or hardcoded values for project use
 export const sanityConfig = {
-  projectId: process.env.SANITY_PROJECT_ID || 'fallback',
-  dataset: process.env.SANITY_DATASET || 'production',
-  apiVersion: process.env.SANITY_API_VERSION || '2023-05-03',
-  token: process.env.SANITY_TOKEN,
+  projectId: '6eq4ev4u',
+  dataset: 'production',
+  apiVersion: '2023-05-01',
+  token: 'skop3Jgt4T0gBK02o6pzRcXWaooRIgCFvZQBvYsSw9OstWkqLH7XaNPkGvjLwPVXzfiGMe6oFP1q0xO0SVYMnaGL33dpS7BWwZRlptpWMtZ7gTHCBNThlDcADFDKK7piAsuBcsPJgzNJYbLj5E9P2tW7NkfRy9gvc45NYQROGHFGFQn8w3eI',
   useCdn: false, // We want always fresh content
 };
 
 // Create the Sanity client with validation check
 const client = (() => {
   try {
-    // Only create client if projectId is valid
-    const projectId = process.env.SANITY_PROJECT_ID || '';
-    if (projectId && /^[a-z0-9-]+$/.test(projectId)) {
+    // Use the hardcoded config from above
+    if (sanityConfig.projectId && /^[a-z0-9-]+$/.test(sanityConfig.projectId)) {
       return createClient(sanityConfig);
     }
     console.warn('Invalid Sanity projectId, using fallback data');
