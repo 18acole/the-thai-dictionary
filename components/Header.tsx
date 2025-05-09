@@ -32,11 +32,7 @@ export default function Header({ language, setLanguage }: HeaderProps) {
   return (
     <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-sm border-b border-pink-100 p-3">
       <div className="max-w-4xl mx-auto px-4 flex justify-between items-center">
-        <div className="flex space-x-4">
-          <a href="/admin" className="text-xs text-pink-500 hover:text-pink-600 transition-colors">
-            {language === 'english' ? 'Admin' : '管理'}
-          </a>
-        </div>
+        <div className="flex-1"></div>
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={toggleDropdown}
