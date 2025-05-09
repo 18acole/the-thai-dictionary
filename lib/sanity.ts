@@ -8,6 +8,7 @@ const fallbackData = [
     chinese: '你好',
     thai: 'สวัสดี',
     romanized: 'Sawadee',
+    pinyin: 'Nǐ hǎo',
     audioUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Th-sawatdii_khrap.ogg',
   },
   {
@@ -16,6 +17,7 @@ const fallbackData = [
     chinese: '谢谢',
     thai: 'ขอบคุณ',
     romanized: 'Khob khun',
+    pinyin: 'Xiè xiè',
     audioUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a0/Th-khxbkhun.ogg',
   },
   {
@@ -24,6 +26,7 @@ const fallbackData = [
     chinese: '是',
     thai: 'ใช่',
     romanized: 'Chai',
+    pinyin: 'Shì',
     audioUrl: 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Th-ch%C4%B0.ogg',
   },
   {
@@ -32,6 +35,7 @@ const fallbackData = [
     chinese: '不',
     thai: 'ไม่',
     romanized: 'Mai',
+    pinyin: 'Bù',
     audioUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Th-m%C4%80y.ogg',
   },
   {
@@ -40,6 +44,7 @@ const fallbackData = [
     chinese: '好',
     thai: 'ดี',
     romanized: 'Dee',
+    pinyin: 'Hǎo',
     audioUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Th-dii.ogg',
   },
   {
@@ -48,6 +53,7 @@ const fallbackData = [
     chinese: '好吃',
     thai: 'อร่อย',
     romanized: 'Aroy',
+    pinyin: 'Hǎo chī',
     audioUrl: '',
   },
   {
@@ -56,6 +62,7 @@ const fallbackData = [
     chinese: '美丽',
     thai: 'สวย',
     romanized: 'Suay',
+    pinyin: 'Měilì',
     audioUrl: '',
   },
   {
@@ -64,6 +71,7 @@ const fallbackData = [
     chinese: '多少钱',
     thai: 'เท่าไหร่',
     romanized: 'Tao rai',
+    pinyin: 'Duōshǎo qián',
     audioUrl: '',
   },
   {
@@ -72,6 +80,7 @@ const fallbackData = [
     chinese: '水',
     thai: 'น้ำ',
     romanized: 'Nam',
+    pinyin: 'Shuǐ',
     audioUrl: '',
   },
   {
@@ -80,6 +89,7 @@ const fallbackData = [
     chinese: '热',
     thai: 'ร้อน',
     romanized: 'Ron',
+    pinyin: 'Rè',
     audioUrl: '',
   },
   {
@@ -88,6 +98,7 @@ const fallbackData = [
     chinese: '帮助',
     thai: 'ช่วย',
     romanized: 'Chuay',
+    pinyin: 'Bāngzhù',
     audioUrl: '',
   },
   {
@@ -96,6 +107,7 @@ const fallbackData = [
     chinese: '开心',
     thai: 'มีความสุข',
     romanized: 'Mee kwaam suk',
+    pinyin: 'Kāixīn',
     audioUrl: '',
   },
 ];
@@ -136,13 +148,14 @@ export const sanityClient = {
     
     try {
       // GROQ query to get all dictionary words
-      const query = `*[_type == "dictionaryEntry"] {
+      const query = `*[_type == "word"] {
         _id,
         english,
         chinese,
         thai,
         romanized,
-        "audioUrl": audio.asset->url
+        pinyin,
+        audioUrl
       }`;
       
       // Attempt to fetch data from Sanity (client is guaranteed non-null here)

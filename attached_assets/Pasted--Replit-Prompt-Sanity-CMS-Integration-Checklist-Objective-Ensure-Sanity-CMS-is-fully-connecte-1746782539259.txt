@@ -1,0 +1,96 @@
+✅ Replit Prompt: Sanity CMS Integration Checklist
+
+🎯 Objective
+
+Ensure Sanity CMS is fully connected to the Thai Dictionary app and that the app successfully fetches and displays dictionary entries. This prompt checks the full integration pipeline and creates any missing pieces.
+
+🧪 Step 1: Check Schema Setup in Sanity
+
+Go to /sanity/schemas/
+
+Confirm there is a schema file for word.ts or similar
+
+If missing, create it:
+
+export default {
+  name: "word",
+  title: "Word",
+  type: "document",
+  fields: [
+    { name: "english", title: "English", type: "string" },
+    { name: "chinese", title: "Chinese", type: "string" },
+    { name: "thai", title: "Thai", type: "string" },
+    { name: "pinyin", title: "Pinyin", type: "string" },
+    { name: "audioUrl", title: "Audio URL", type: "url" },
+  ],
+}
+
+Then register the schema in schema.ts:
+
+import word from './word'
+export const schemaTypes = [word]
+
+🔌 Step 2: Check Sanity Client Connection
+
+Go to lib/sanityClient.ts
+
+Confirm the following code exists:
+
+import { createClient } from '@sanity/client'
+
+export const sanity = createClient({
+  projectId: process.env.SANITY_PROJECT_ID,
+  dataset: process.env.SANITY_DATASET,
+  apiVersion: process.env.SANITY_API_VERSION,
+  useCdn: true,
+})
+
+📡 Step 3: Fetch Data from Sanity
+
+Check for a function like this in lib/getAllWords.ts or similar:
+
+import { sanity } from '@/lib/sanityClient'
+
+export async function getAllWords() {
+  return await sanity.fetch(`*[_type == "word"]{
+    _id,
+    english,
+    chinese,
+    thai,
+    pinyin,
+    audioUrl
+  }`)
+}
+
+If not present, create it.
+
+🧪 Step 4: Confirm Data Loads in App
+
+In the main dictionary component, check for:
+
+useEffect(() => {
+  async function loadWords() {
+    const words = await getAllWords()
+    setAllWords(words)
+  }
+  loadWords()
+}, [])
+
+Temporarily console.log(allWords) and confirm data is received in the Replit console
+
+✅ Final Output Confirmation
+
+At least 1 dictionary entry should display in the UI (with Thai + English/Chinese)
+
+Audio button should show if audioUrl is provided
+
+🧼 Notes
+
+Do not change any styling or UI logic
+
+Only implement missing parts of schema, fetch, or data binding
+
+Use existing .env keys already provided
+
+Keep Tailwind styling and layout untouched
+
