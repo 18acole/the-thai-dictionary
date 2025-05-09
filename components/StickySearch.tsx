@@ -113,7 +113,7 @@ export default function StickySearch({
       }`}
       aria-hidden={!isVisible}
     >
-      <div className="bg-white/90 backdrop-blur-sm shadow-md border-b border-pink-200 py-2 px-4">
+      <div className="bg-white/90 backdrop-blur-sm shadow-md border-b border-pink-200 py-3 px-4">
         <div className="max-w-xl mx-auto">
           <form onSubmit={handleSubmit} className="flex gap-2 items-center w-full">
             <div className="relative flex-1">

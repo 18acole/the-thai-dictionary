@@ -1,0 +1,85 @@
+# 🔍 Replit Prompt: Clear Search UX Improvement
+
+## 🎯 Objective
+
+Improve the search experience by allowing users to easily reset their search and view the full dictionary again without needing to manually delete the text or refresh the page.
+
+Also apply two small visual styling adjustments as follows (no logic changes).
+
+---
+
+## ✅ Feature: Contextual "Clear" Button
+
+### Behavior:
+
+* When a search query is active (i.e. input is not empty), display a small ✖️ button
+* Clicking the button should:
+
+  * Clear the search input
+  * Reset the filtered results to show the full database
+  * Optionally scroll the page back to the top for clarity
+
+### Design Option:
+
+Place the ✖️ button **inside the input** (right-aligned), like this:
+
+```tsx
+{searchQuery && (
+  <button
+    onClick={clearSearch}
+    className="absolute right-12 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+    aria-label="Clear search"
+  >
+    ✖️
+  </button>
+)}
+```
+
+Wrap the search input in a `relative` container:
+
+```tsx
+<div className="relative w-full">
+  <input ... />
+  {/* ✖️ button renders here when active */}
+</div>
+```
+
+### Logic:
+
+```tsx
+const clearSearch = () => {
+  setSearchQuery("")
+  setFilteredSuggestions([])
+  window.scrollTo({ top: 0, behavior: "smooth" })
+}
+```
+
+---
+
+## 🎨 Additional Visual Styling Fixes (Do Not Skip)
+
+### 1. Adjust spacing between ❌ and Search button (hero search only)
+
+* The "clear" ✖️ icon is currently too close to the Search button on the large (hero) search bar
+* Add horizontal spacing (e.g. `mr-2`) between the ✖️ icon and the button
+* Do **not** change anything in the sticky search bar — spacing there is correct
+
+### 2. Equal vertical padding in sticky search bar
+
+* In the sticky search bar's container, the top and bottom vertical padding are currently mismatched
+* Adjust styling so that **top and bottom spacing are visually equal**
+* Match the bottom spacing as the standard, and apply it to the top
+
+---
+
+## 🧼 Constraints
+
+* Do not modify any existing design layout or search logic
+* Only enhance the UI by conditionally rendering this button when `searchQuery !== ""`
+* Maintain consistent spacing and alignment with the app’s current design system
+
+---
+
+## ✅ Summary
+
+Add a ✖️ button inside the search input that appears when a user is actively searching. Clicking it clears the input and resets the view to the full dataset. Also fix the spacing between the ✖️ icon and the search button in the hero input, and ensure equal vertical padding around the sticky search bar.

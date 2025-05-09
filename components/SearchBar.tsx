@@ -107,7 +107,7 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, allWo
           <button
             type="button"
             onClick={clearSearch}
-            className="absolute right-[100px] top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute right-[120px] top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 mr-2"
             aria-label="Clear search"
           >
             ✖️
