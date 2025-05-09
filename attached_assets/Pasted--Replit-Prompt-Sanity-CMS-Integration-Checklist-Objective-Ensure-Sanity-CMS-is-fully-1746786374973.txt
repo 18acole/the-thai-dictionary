@@ -1,0 +1,118 @@
+# ✅ Replit Prompt: Sanity CMS Integration Checklist
+
+## 🎯 Objective
+
+Ensure Sanity CMS is fully connected to the Thai Dictionary app and that the app successfully fetches and displays dictionary entries. This prompt checks the full integration pipeline and creates any missing pieces.
+
+**Additionally:**
+
+* ✅ Now that Sanity CMS is confirmed to be working, the admin page is no longer needed. Please remove the admin page and any routes or components related to it.
+* ✅ Improve header design:
+
+  * Move the **language selector** to the **left side** of the top header
+  * Show the site title **“The Thai Dictionary”** in the **center of the top header**, but **only when the user has scrolled down** and the main hero title is no longer visible
+  * The sticky header title should use the same color and font as the hero title, but with a smaller font size (e.g. `text-xl`)
+
+---
+
+## 🧪 Step 1: Check Schema Setup in Sanity
+
+* Go to `/sanity/schemas/`
+* Confirm there is a schema file for `word.ts` or similar
+* If missing, create it:
+
+```ts
+export default {
+  name: "word",
+  title: "Word",
+  type: "document",
+  fields: [
+    { name: "english", title: "English", type: "string" },
+    { name: "chinese", title: "Chinese", type: "string" },
+    { name: "thai", title: "Thai", type: "string" },
+    { name: "pinyin", title: "Pinyin", type: "string" },
+    { name: "audioUrl", title: "Audio URL", type: "url" },
+  ],
+}
+```
+
+* Then register the schema in `schema.ts`:
+
+```ts
+import word from './word'
+export const schemaTypes = [word]
+```
+
+---
+
+## 🔌 Step 2: Check Sanity Client Connection
+
+* Go to `lib/sanityClient.ts`
+* Confirm the following code exists:
+
+```ts
+import { createClient } from '@sanity/client'
+
+export const sanity = createClient({
+  projectId: process.env.SANITY_PROJECT_ID,
+  dataset: process.env.SANITY_DATASET,
+  apiVersion: process.env.SANITY_API_VERSION,
+  useCdn: true,
+})
+```
+
+---
+
+## 📡 Step 3: Fetch Data from Sanity
+
+* Check for a function like this in `lib/getAllWords.ts` or similar:
+
+```ts
+import { sanity } from '@/lib/sanityClient'
+
+export async function getAllWords() {
+  return await sanity.fetch(`*[_type == "word"]{
+    _id,
+    english,
+    chinese,
+    thai,
+    pinyin,
+    audioUrl
+  }`)
+}
+```
+
+* If not present, create it.
+
+---
+
+## 🧪 Step 4: Confirm Data Loads in App
+
+* In the main dictionary component, check for:
+
+```ts
+useEffect(() => {
+  async function loadWords() {
+    const words = await getAllWords()
+    setAllWords(words)
+  }
+  loadWords()
+}, [])
+```
+
+* Temporarily `console.log(allWords)` and confirm data is received in the Replit console
+
+---
+
+## ✅ Final Output Confirmation
+
+* At least 1 dictionary entry should display in the UI (with Thai + English/Chinese)
+* Audio button should show if `audioUrl` is provided
+
+---
+
+## 🧼 Notes
+
+* Do not change any styling or UI logic beyond the changes specified
+* Only implement missing parts of schema, fetch, or data binding
+* Use existing `.env` keys already provided
